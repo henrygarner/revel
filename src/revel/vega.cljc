@@ -52,7 +52,7 @@
                    {:update
                     (reduce
                      (fn [acc [scale field]]
-                       (assoc scale {:scale scale :field field}))
+                       (assoc acc scale {:scale scale :field field}))
                      {:shape {:value "circle"},
                       :strokeWidth {:value 2},
                       :opacity {:value 0.5},

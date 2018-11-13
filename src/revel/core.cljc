@@ -12,7 +12,7 @@
 
 (defn make-layer
   [plot type & args]
-  (apply layer type plot args))
+  (apply layer/layer type plot args))
 
 (defrecord Plot [opts data])
 
