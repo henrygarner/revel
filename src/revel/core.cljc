@@ -4,11 +4,15 @@
 
 (defmethod layer/layer :default
   [_ plot & args]
-  {:layer :default})
+  {:type :default})
 
 (defmethod layer/layer ::point
   [_ plot & args]
-  {:layer :point})
+  {:type ::point})
+
+(defmethod layer/layer ::bar
+  [_ plot & args]
+  {:type ::bar})
 
 (defn make-layer
   [plot type & args]
