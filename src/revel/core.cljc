@@ -1,22 +1,21 @@
 (ns revel.core
-  (:require [revel.geom :as g]
-            [revel.layer :as layer]))
+  (:require [revel.geom :as g]))
 
-(defmethod layer/layer :default
+(defmulti make-layer
+  (fn [type plot & args]
+    type))
+
+(defmethod make-layer :default
   [_ plot & args]
   {:type :default})
 
-(defmethod layer/layer ::point
+(defmethod make-layer ::point
   [_ plot & args]
   {:type ::point})
 
-(defmethod layer/layer ::bar
+(defmethod make-layer ::bar
   [_ plot & args]
   {:type ::bar})
-
-(defn make-layer
-  [plot type & args]
-  (apply layer/layer type plot args))
 
 (defrecord Plot [opts data])
 
@@ -25,5 +24,13 @@
   (->Plot opts data))
 
 (defn layer
-  [plot & args]
-  (update plot :layers conj (apply make-layer plot args)))
+  [plot type & args]
+  (update plot :layers conj (apply make-layer type plot args)))
+
+(defmulti render
+  (fn [plot type & args]
+    type))
+
+(defmethod render :default
+  [plot _ & args]
+  "Unknown render function")

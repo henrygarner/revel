@@ -2,7 +2,7 @@
   (:require [revel.core :as r]
             [revel.data :refer [to-records factor?]]))
 
-(defn vega
+(defn vega*
   [{:keys [opts data layers] :as plot} {:keys [width height]}]
   (assoc {}
          :width width
@@ -84,3 +84,7 @@
                                                
                                                {}
                                                (select-keys opts [:x :y]))}})))))
+
+(defmethod r/render ::vega
+  [plot _ & args]
+  (apply vega* plot args))

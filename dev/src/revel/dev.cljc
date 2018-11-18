@@ -8,15 +8,15 @@
             [revel.data :as d]
             [oz.core :as oz]))
 
-(oz/start-plot-server!)
+#_(oz/start-plot-server!)
 
 (def cars-data
   (take 1000 (transform-keys ->kebab-case-keyword (parse-string (slurp (io/resource "cars.json"))))))
 
 
-(-> (r/plot {:x :horsepower :y :miles-per-gallon :size :acceleration} (d/from-records cars-data))
+#_(-> (r/plot {:x :horsepower :y :miles-per-gallon :size :acceleration} (d/from-records cars-data))
     (r/layer ::r/point)
-    (v/vega {:width 400 :height 400})
+    (r/render ::v/vega {:width 400 :height 400})
     (oz/v! :mode :vega))
 
 (def bar-data
@@ -40,9 +40,9 @@
    :data [{:name "table", :values bar-data}]})
 
 
-(oz/v! bar-chart :mode :vega)
+#_(oz/v! bar-chart :mode :vega)
 
-(-> (r/plot {:x :amount :y :category} (d/from-records bar-data))
-    (r/layer ::r/bar)
-    (v/vega {:width 400 :height 200})
-    (oz/v! :mode :vega))
+#_(-> (r/plot {:x :amount :y :category} (d/from-records bar-data))
+      (r/layer ::r/point)
+      (r/render ::v/vega {:width 400 :height 200})
+      (oz/v! :mode :vega))
