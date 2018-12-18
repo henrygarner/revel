@@ -185,7 +185,7 @@
                                                   :y {:scale :y :field :prediction-lower}
                                                   :y2 {:scale :y :field :prediction-upper}
                                                   :fill {:value "gray"}
-                                                  :fillOpacity {:value 0.2}}}}
+                                                  :fillOpacity {:value 0.1}}}}
                                {:type "area"
                                 :clip true
                                 :from {:data source-name}
@@ -194,18 +194,18 @@
                                                   :y {:scale :y :field :estimate-lower}
                                                   :y2 {:scale :y :field :estimate-upper}
                                                   :fill {:value "gray"}
-                                                  :fillOpacity {:value 0.4}}}}]))))
+                                                  :fillOpacity {:value 0.25}}}}]))))
 
 (defn vega*
-  [{:keys [layers] :as plot} {:keys [width height] :as args}]
+  [{:keys [layers opts domain data] :as plot} {:keys [width height] :as args}]
   (reduce (fn [vega layer]
             (add-layer vega layer))
           (assoc {}
                  :width width
                  :height height
                  :padding 5
-                 :data [ #_{:name "source" :values (to-records data)}]
-                 :axes [] #_(for [{:keys [scale title orient]}
+                 :data []
+                 :axes (vec (for [{:keys [scale title orient]}
                                   [{:scale :x
                                     :title (get opts :x)
                                     :orient "bottom"}
